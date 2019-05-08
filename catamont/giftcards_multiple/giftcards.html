@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript"> 
+	$(document).ready(function() 
+	{
+	     $('#genvcode').submit(function() 
+	     {
+		var vcode = $('#vcode').val();
+		var byemail = $("input[name='byemail']:checked"). val();
+		var bysms = $("input[name='bysms']:checked"). val();
+	        var email = $('#email').val();
+	        var mobileno = $('#mobileno').val();
+	        var client_id = $('#client_id').val();
+		vcode=$.trim(vcode);
+		emaile=$.trim(email);
+		mobileno=$.trim(mobileno);
+		client_id=$.trim(client_id);
+		var valid=true;	
+		var error_str="";
+		if(!client_id)
+                {
+                        error_str +="Please select Gift Card Type \n";
+                        valid=false;
+                }
+		if(!vcode)
+		{
+			error_str +="Please Enter Voucher Code \n";		
+			valid=false;
+		}
+		if(byemail=="on" && !email)
+		{
+			error_str +="Please Enter Email Address \n";
+                        valid=false;	
+		}
+		if(bysms=="on" && !mobileno)
+		{
+			error_str +="Please Enter Mobile Number \n";
+                        valid=false;
+		}
+		else if(/[^\d]/.test(mobileno))
+	        {
+			error_str +="Please enter only numeric value for mobile number \n";
+                        valid=false;
+	        }
+			
+		if(valid===false)
+		{
+			alert(error_str);
+		}	
+		return valid;
+		
+	      });
+	});
+    </script>
+</head>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">CATAMONT.COM</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <!--li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li-->
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+	
+	<?php if ($errorMessage!="") { ?>	
+		<div class="alert alert-warning"><?php echo $errorMessage;?></div>
+	<?php } ?>
+	<?php if ($successMessage!="") { ?>
+		<div class="alert alert-success"><?php echo $successMessage;?></div>
+	<?php } ?>
+    	<h3>Please enter your E-Mail ID & Mobile Number Registered with ICICI Bank.
+		</br>
+		The Gift card will be sent to the details entered by you. 
+	</h3>
+	 <p style="text-align:right"><i></i>(<b><span style='color:red;font-size:20px;'>*</span></b>Indicate Required Field)</p>
+        <form method="POST" action="http://www.catamont.com/giftcards/generate" name="genvcode"  id="genvcode">
+	<div class="form-group">
+            <label for="email"><b><span style='color:red;font-size:20px;'>*</span></b>&nbsp;Select Gift Card Type:</label>
+	    <select name="client_id" id="client_id" style="size:100px;">
+			<option value="">Select</option>
+			<option value="1">Flipkart Gift Card</option>
+			<option value="2">OLA Gift Card</option>
+	    </select>		
+        </div>
+        <div class="form-group">
+            <label for="email"><b><span style='color:red;font-size:20px;'>*</span></b>&nbsp;Voucher code:</label>
+            <input type="text" class="form-control" id="vcode"  name="vcode" maxlength="16">
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="byemail" checked="checked">By Email</label>
+        </div>
+        <div class="form-group">
+            <label for="email"><b><span style='color:red;font-size:20px;'>*</span></b>&nbsp;Email address:</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="bysms" checked="checked">By SMS</label>
+        </div>
+        <div class="form-group">
+            <label for="email"><b><span style='color:red;font-size:20px;'>*</span></b>&nbsp;Mobile No (Without Country Code OR + Sign):</label>
+            <input type="mobileno" class="form-control" id="mobileno" maxlength="10" name="mobileno">
+        </div>
+        <button type="submit" class="btn btn-default" name="submit" id="submit">Submit</button>
+    </form>
+</div>
+</html>
+
